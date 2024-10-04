@@ -1,0 +1,1 @@
+data_path = "Data/messages/inbox"
