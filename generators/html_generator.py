@@ -54,6 +54,7 @@ class HtmlGenerator:
             for user in self.users:
 
                 soup = copy.copy(BeautifulSoup(html_content, 'html.parser'))
+                soup.find('h1').string = user
                 message_template = soup.find('div', {'class': 'message'})
                 messages_list = soup.find('div', {'id': 'messages-holder'})
                 for message in self.user_messages_getter(user):
@@ -66,7 +67,7 @@ class HtmlGenerator:
                         message_sender = copied_message_template.find('h5')
                         message_sender.string = Organizer.language_checker(message.get('sender_name'))
                         message_content = copied_message_template.find('p')
-                        message_content.string = message.get('content')
+                        message_content.string = Organizer.language_checker(message.get('content'))
                         message_content['onclick'] = f"showMessageDetails({time_sent}, {reaction})"
                         messages_list.append(copied_message_template)
                     except:
@@ -82,7 +83,7 @@ class HtmlGenerator:
 
     def user_messages_getter(self, user):
         user_messages = self.data[user]
-        return user_messages
+        return sorted(user_messages).reverse()
 
     def user_populater(self):
         for user in self.data.keys():
