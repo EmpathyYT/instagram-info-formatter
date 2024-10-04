@@ -39,7 +39,7 @@ class HtmlGenerator:
             soup = BeautifulSoup(html_content, 'html.parser')
             user_list = soup.find('div', {'class': 'list-group'})
             for key in self.users:
-                new_a = soup.new_tag('a', href=f'Generated Messages/Messages/{key}.html',
+                new_a = soup.new_tag('a', href=f'Messages/{self.users.index(key)}.html',
                                      **{'class': 'list-group-item list-group-item-action'})
                 new_a.string = key
                 user_list.append(new_a)
