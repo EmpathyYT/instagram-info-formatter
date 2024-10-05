@@ -95,6 +95,6 @@ class HtmlGenerator:
     def runner(self):
         os.makedirs('Generated Messages', exist_ok=True)
         self.user_populater()
-        self.generate_dropdown()
+        #self.generate_dropdown()
         self.generate_home_page()
         self.message_populater()
