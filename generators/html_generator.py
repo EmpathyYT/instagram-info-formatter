@@ -64,6 +64,7 @@ class HtmlGenerator:
                         reaction = "null"
                         if 'reactions' in message:
                             reaction = message.get('reactions')[0].get("reaction")
+                            reaction = reaction.encode('latin1').decode('utf-8')
                         time_sent = datetime.fromtimestamp(message.get('timestamp_ms') / 1000)
                         message_sender = copied_message_template.find('h5')
                         message_sender.string = Organizer.language_checker(message.get('sender_name'))
