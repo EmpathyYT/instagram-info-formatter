@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from urllib.parse import uses_relative
 
 from bs4 import BeautifulSoup
 import json
@@ -60,7 +61,7 @@ class HtmlGenerator:
                 for message in self.user_messages_getter(user):
                     try:
                         copied_message_template = copy.copy(message_template)
-                        reaction = None
+                        reaction = "null"
                         if 'reactions' in message:
                             reaction = message.get('reactions')[0].get("reaction")
                         time_sent = datetime.fromtimestamp(message.get('timestamp_ms') / 1000)
@@ -68,7 +69,7 @@ class HtmlGenerator:
                         message_sender.string = Organizer.language_checker(message.get('sender_name'))
                         message_content = copied_message_template.find('p')
                         message_content.string = Organizer.language_checker(message.get('content'))
-                        message_content['onclick'] = f"showMessageDetails({time_sent}, {reaction})"
+                        copied_message_template['onclick'] = f"showMessageDetails('{time_sent.strftime('%Y-%m-%d %H:%M:%S %Z%z')}', '{reaction}')"
                         messages_list.append(copied_message_template)
                     except:
                         pass
@@ -83,7 +84,7 @@ class HtmlGenerator:
 
     def user_messages_getter(self, user):
         user_messages = self.data[user]
-        return sorted(user_messages).reverse()
+        return user_messages[::-1]
 
     def user_populater(self):
         for user in self.data.keys():

@@ -91,20 +91,7 @@
     </div>
 </nav>
 <h1 id="username">
-
 </h1>
-<div id="messages-holder">
-    <div class="message" onclick="showMessageDetails()">
-        <div class="container no-padding">
-            <div class="row">
-                <div class="col-10">
-                    <h5></h5>
-                    <p></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -112,11 +99,8 @@
                 <h5 class="modal-title" id="messageModalLabel">Message Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modal-text">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-body">
+                <p id="modal-text"></p>
             </div>
         </div>
     </div>
@@ -126,16 +110,15 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script>
-
     function showMessageDetails(date, reaction) {
+        document.getElementById('modal-text').innerHTML = "Sent at: " + date;
+        if (reaction && reaction !== 'null') {
+            document.getElementById('modal-text').innerHTML += "<br>Reaction: " + reaction;
+        }
         const myModal = new bootstrap.Modal(document.getElementById('messageModal'), {
             backdrop: 'static',
             keyboard: false
         });
-        document.getElementById('modal-text').innerHTML = "Sent at: " + date
-        if (reaction !== null) {
-            document.getElementById('modal-text').innerHTML += "<br>Reaction: " + reaction
-        }
         myModal.show();
     }
 </script>
