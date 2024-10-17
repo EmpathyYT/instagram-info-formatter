@@ -18,7 +18,10 @@ class Organizer:
                     info = self.json_file_loader(f"{self.path}/{folder}/{file}")
                     name = self.language_checker(self.user_name_getter(info))
                     messages = self.messages_getter(info)
-                    self.data.update({name: messages})
+                    if name in self.data:
+                       self.data[name] += messages
+                    else:
+                        self.data.update({name: messages})
                     self.counter += 1
 
         self.data.update({"total_users": self.counter})
